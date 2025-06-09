@@ -13,14 +13,16 @@ function M.get_listed_buffers()
 end
 
 function M.create_window()
-  local width = math.floor(vim.o.columns * 0.8)
-  local height = math.floor(vim.o.lines * 0.6)
+  local buffers = M.get_listed_buffers()
+  local buffer_count = #buffers
+  
+  local width = math.min(80, math.floor(vim.o.columns * 0.8))
+  local height = math.min(math.max(buffer_count + 2, 5), math.floor(vim.o.lines * 0.4))
   local row = math.floor((vim.o.lines - height) / 2)
   local col = math.floor((vim.o.columns - width) / 2)
   
   local buf_id = vim.api.nvim_create_buf(false, true)
   
-  -- Set buffer options before making it readonly
   vim.bo[buf_id].buftype = 'nofile'
   vim.bo[buf_id].bufhidden = 'wipe'
   vim.bo[buf_id].swapfile = false
@@ -77,9 +79,9 @@ function M.render_buffers(buf_id)
     end
   end
   
+  vim.bo[buf_id].modifiable = true
   vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
   
-  -- Set readonly and modifiable after content is set
   vim.bo[buf_id].modifiable = false
   vim.bo[buf_id].readonly = true
 end
