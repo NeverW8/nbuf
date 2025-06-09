@@ -17,7 +17,7 @@ function M.create_window()
   local buffer_count = #buffers
   
   local width = math.min(80, math.floor(vim.o.columns * 0.8))
-  local height = math.min(math.max(buffer_count + 2, 5), math.floor(vim.o.lines * 0.4))
+  local height = math.min(math.max(buffer_count + 1, 3), 15)
   local row = math.floor((vim.o.lines - height) / 2)
   local col = math.floor((vim.o.columns - width) / 2)
   
@@ -79,9 +79,9 @@ function M.render_buffers(buf_id)
     end
   end
   
+  vim.bo[buf_id].readonly = false
   vim.bo[buf_id].modifiable = true
   vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
-  
   vim.bo[buf_id].modifiable = false
   vim.bo[buf_id].readonly = true
 end
