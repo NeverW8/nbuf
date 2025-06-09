@@ -20,6 +20,11 @@ function M.create_window()
   
   local buf_id = vim.api.nvim_create_buf(false, true)
   
+  -- Set buffer options before making it readonly
+  vim.bo[buf_id].buftype = 'nofile'
+  vim.bo[buf_id].bufhidden = 'wipe'
+  vim.bo[buf_id].swapfile = false
+  
   local win_opts = {
     relative = 'editor',
     width = width,
@@ -34,11 +39,9 @@ function M.create_window()
   
   local win_id = vim.api.nvim_open_win(buf_id, true, win_opts)
   
+  -- Set readonly and modifiable last
   vim.bo[buf_id].modifiable = false
   vim.bo[buf_id].readonly = true
-  vim.bo[buf_id].buftype = 'nofile'
-  vim.bo[buf_id].bufhidden = 'wipe'
-  vim.bo[buf_id].swapfile = false
   
   vim.wo[win_id].cursorline = true
   vim.wo[win_id].number = false
