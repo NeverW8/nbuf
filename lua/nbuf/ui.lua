@@ -39,10 +39,6 @@ function M.create_window()
   
   local win_id = vim.api.nvim_open_win(buf_id, true, win_opts)
   
-  -- Set readonly and modifiable last
-  vim.bo[buf_id].modifiable = false
-  vim.bo[buf_id].readonly = true
-  
   vim.wo[win_id].cursorline = true
   vim.wo[win_id].number = false
   vim.wo[win_id].relativenumber = false
@@ -81,9 +77,11 @@ function M.render_buffers(buf_id)
     end
   end
   
-  vim.bo[buf_id].modifiable = true
   vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
+  
+  -- Set readonly and modifiable after content is set
   vim.bo[buf_id].modifiable = false
+  vim.bo[buf_id].readonly = true
 end
 
 function M.setup_keymaps(buf_id, manager)
