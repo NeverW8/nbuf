@@ -2,7 +2,7 @@
 
 A simple and efficient buffer manager for Neovim that provides a floating window interface to navigate and manage your open buffers.
 
-![NBuf Showcase](https://raw.githubusercontent.com/NeverW8/nbuf/ut.gif)
+![NBuf Showcase](https://github.com/NeverW8/nbuf/blob/main/ut.gif)
 
 ## Installation
 
